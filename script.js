@@ -72,3 +72,65 @@ const taco = FactoryFunction("taco");
 // taco.capitalizeString(); // ERROR!!
 
 taco.printString(); // this prints "----TACO----"
+
+const counterCreator = () => {
+  let count = 0;
+  return () => {
+    console.log(count);
+    count++;
+  };
+};
+
+const counter = counterCreator();
+
+counter(); // 0
+counter(); // 1
+counter(); // 2
+counter(); // 3
+
+const Player = (name, level) => {
+  let health = level * 2;
+  const getLevel = () => level;
+  const getName = () => name;
+  const die = () => {
+    // uh oh
+  };
+  const damage = (x) => {
+    health -= x;
+    if (health <= 0) {
+      die();
+    }
+  };
+  const attack = (enemy) => {
+    if (level < enemy.getLevel()) {
+      damage(1);
+      console.log(`${enemy.getName()} has damaged ${name}`);
+    }
+    if (level >= enemy.getLevel()) {
+      enemy.damage(1);
+      console.log(`${name} has damaged ${enemy.getName()}`);
+    }
+  };
+  return { attack, damage, getLevel, getName };
+};
+
+const jimmie = Player("jim", 10);
+const badGuy = Player("jeff", 4);
+jimmie.attack(badGuy);
+
+const Person1 = (name) => {
+  const sayName = () => console.log(`my name is ${name}`);
+  return { sayName };
+};
+
+const Nerd = (name) => {
+  // simply create a person and pull out the sayName function with destructuring assignment syntax!
+  const { sayName } = Person1(name);
+  const doSomethingNerdy = () => console.log("nerd stuff");
+  return { sayName, doSomethingNerdy };
+};
+
+const jeff2 = Nerd("jeff");
+
+jeff2.sayName(); //my name is jeff
+jeff2.doSomethingNerdy(); // nerd stuff
