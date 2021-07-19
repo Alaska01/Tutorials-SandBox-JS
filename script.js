@@ -45,3 +45,30 @@ const food = "rice";
 console.log(name, color, number, food); // Maynard red 34 rice
 
 console.log({ name, color, number, food });
+
+let a = 17;
+
+const func = (x) => {
+  let a = x;
+  console.log(a);
+};
+
+func(99);
+
+console.log(a); // ???????
+
+const FactoryFunction = (string) => {
+  const capitalizeString = () => string.toUpperCase();
+  const printString = () => console.log(`----${capitalizeString()}----`);
+  return { printString };
+};
+
+const taco = FactoryFunction("taco");
+
+// printString(); // ERROR!!
+
+// capitalizeString(); // ERROR!!
+
+// taco.capitalizeString(); // ERROR!!
+
+taco.printString(); // this prints "----TACO----"
